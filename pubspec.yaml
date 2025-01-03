@@ -1,0 +1,67 @@
+name: flutter_calculator
+description: "A new Flutter project."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  flutter_localizations:
+    sdk: flutter
+  get: ^4.6.6
+  shared_preferences: ^2.3.4
+  sizer: ^3.0.4
+  flutter_svg: ^2.0.16
+  intl: ^0.19.0
+  table_calendar: ^3.1.3
+  freezed_annotation: ^2.4.4
+  json_annotation: ^4.9.0
+  sqflite: ^2.4.1
+  path: ^1.9.0
+  share_plus: ^10.1.3
+  file_picker: ^8.1.6
+  path_provider: ^2.1.5
+  permission_handler: ^11.3.1
+  package_info_plus: ^8.1.2
+  device_preview: ^1.2.0
+  new_version_plus: ^0.0.12
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.13
+  flutter_gen_runner: any
+flutter:
+  uses-material-design: true
+  generate: true
+  assets:
+    - assets/images/icons/
+    - assets/images/logo/
+    - assets/images/png/
+
+  fonts:
+    - family: Pretendard
+      fonts:
+        - asset: assets/fons/Pretendard-Black.ttf
+          weight: 900
+        - asset: assets/fons/Pretendard-Bold.ttf
+          weight: 700
+        - asset: assets/fons/Pretendard-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fons/Pretendard-ExtraLight.ttf
+          weight: 200
+        - asset: assets/fons/Pretendard-Light.ttf
+          weight: 300
+        - asset: assets/fons/Pretendard-Medium.ttf
+          weight: 500
+        - asset: assets/fons/Pretendard-Regular.ttf
+          weight: 400
+        - asset: assets/fons/Pretendard-SemiBold.ttf
+          weight: 600
+        - asset: assets/fons/Pretendard-Thin.ttf
+          weight: 100

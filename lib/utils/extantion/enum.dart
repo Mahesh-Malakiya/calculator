@@ -1,0 +1,7 @@
+enum SearchType { RECIVED_MONEY, SPENT_MONEY, COMPARISON, CONTACT }
+
+enum FamilyEvent { FIFA_ONLINE, FIRST_BIRTHDAY_PARTY, WEDDING }
+
+enum Relationship { WORK, FAMILY, FRIEND }
+
+enum TransactionType { RECIVED_MONEY, SPENT_MONEY }
