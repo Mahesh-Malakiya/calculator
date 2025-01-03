@@ -1,9 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_calculator/config/color/app_color.dart';
-import 'package:flutter_calculator/config/color/app_text_style.dart';
-import 'package:flutter_calculator/gen/assets.gen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_calculator/constants/common_imports.dart';
 
 class SelectFilter extends StatelessWidget {
   const SelectFilter({

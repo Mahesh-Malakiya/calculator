@@ -114,7 +114,7 @@ class SquareBorderTextField extends StatelessWidget {
                   ),
                 ),
               ),
-              validator: validator, // Use the validator here
+              validator: validator,
             ),
           ),
         ),

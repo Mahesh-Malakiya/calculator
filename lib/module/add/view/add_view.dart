@@ -8,7 +8,7 @@ import 'package:flutter_calculator/config/theme/screen_utils.dart';
 import 'package:flutter_calculator/module/add/controller/add_controller.dart';
 import 'package:flutter_calculator/module/add/view/widget/calander.dart';
 import 'package:flutter_calculator/module/add/view/widget/title_with_textfield.dart';
-import 'package:flutter_calculator/module/family_event_note/view/widget/select_filter.dart';
+import 'package:flutter_calculator/module/family_event_note/view/widget/common/select_filter.dart';
 import 'package:flutter_calculator/utils/extantion/app_extantion.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
@@ -89,9 +89,7 @@ class AddView extends StatelessWidget {
                                           index == controller.isSelected.value
                                               ? true
                                               : false,
-                                      title: controller.filterItems[index]
-                                          .toTransactionTyoeLocalization(
-                                              context),
+                                      title: controller.filterItems[index],
                                     ),
                                   ),
                                 ),
@@ -223,9 +221,7 @@ class AddView extends StatelessWidget {
                                       index == controller.isSelectedFamily.value
                                           ? true
                                           : false,
-                                  title: controller.eventSelect[index]
-                                      .toEventExtensionApplocalizations(
-                                          context),
+                                  title: controller.eventSelect[index],
                                 ),
                               ),
                             ),
@@ -274,9 +270,7 @@ class AddView extends StatelessWidget {
                                           controller.isSelectedRelation.value
                                       ? true
                                       : false,
-                                  title: controller.relationshipSelect[index]
-                                      .toRelationExtensionApplocalizations(
-                                          context),
+                                  title: controller.relationshipSelect[index],
                                 ),
                               ),
                             ),

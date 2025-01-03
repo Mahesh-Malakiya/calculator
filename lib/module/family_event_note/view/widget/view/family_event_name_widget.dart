@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_calculator/module/family_event_note/controller/family_event_note_controller.dart';
-import 'package:flutter_calculator/module/family_event_note/view/widget/amount_card.dart';
+import 'package:flutter_calculator/module/family_event_note/view/widget/common/amount_card.dart';
 import 'package:flutter_calculator/utils/extantion/enum.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';

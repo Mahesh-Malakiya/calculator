@@ -1,13 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_calculator/config/color/app_color.dart';
-import 'package:flutter_calculator/config/color/app_text_style.dart';
 import 'package:flutter_calculator/config/theme/screen_utils.dart';
-import 'package:flutter_calculator/module/family_event_note/view/widget/amount_card.dart';
+import 'package:flutter_calculator/module/family_event_note/view/widget/common/amount_card.dart';
 import 'package:flutter_calculator/utils/extantion/app_extantion.dart';
-import 'package:flutter_calculator/utils/extantion/enum.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:get/get.dart';
-import 'package:sizer/sizer.dart';
+import 'package:flutter_calculator/constants/common_imports.dart';
 
 class CompareCardWidget extends StatelessWidget {
   const CompareCardWidget({

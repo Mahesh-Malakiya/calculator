@@ -149,8 +149,7 @@ class AddController extends GetxController {
   void updateRelationTextField() {
     relationShipSelectController.value.clear();
     relationShipSelectController.value.text =
-        relationshipSelect[isSelectedRelation.value]
-            .toRelationExtensionApplocalizations(context);
+        relationshipSelect[isSelectedRelation.value];
   }
 
   /// EVENT
@@ -194,8 +193,8 @@ class AddController extends GetxController {
 
   void updateFamilyTextField(BuildContext context) {
     familyEventSelectController.value.clear();
-    familyEventSelectController.value.text = eventSelect[isSelectedFamily.value]
-        .toEventExtensionApplocalizations(context);
+    familyEventSelectController.value.text =
+        eventSelect[isSelectedFamily.value];
   }
 
   /// update on data base...
