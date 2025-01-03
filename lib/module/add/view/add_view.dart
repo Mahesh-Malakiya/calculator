@@ -183,7 +183,7 @@ class AddView extends StatelessWidget {
                             },
                           ),
                           TitleWithTextfield(
-                            enabled: false,
+                            enabled: true,
                             withoutSerchIcon: true,
                             title: localization.familyEventsSelect,
                             hintText: localization.enterFamilyEvent,
@@ -212,21 +212,18 @@ class AddView extends StatelessWidget {
                             child: ListView.builder(
                               physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
-                              itemCount: controller.familyEventsSelect.length,
+                              itemCount: controller.eventSelect.length,
                               padding: EdgeInsets.symmetric(vertical: 2.h),
                               itemBuilder: (context, index) => Obx(
                                 () => SelectFilter(
                                   onTap: () {
-                                    controller.isSelectedFamily.value = index;
-                                    controller.updateFamilyEvent(
-                                        controller.isSelectedFamily.value);
                                     controller.updateFamilyTextField(context);
                                   },
                                   isSelecte:
                                       index == controller.isSelectedFamily.value
                                           ? true
                                           : false,
-                                  title: controller.familyEventsSelect[index]
+                                  title: controller.eventSelect[index]
                                       .toEventExtensionApplocalizations(
                                           context),
                                 ),

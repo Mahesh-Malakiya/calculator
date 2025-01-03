@@ -14,65 +14,66 @@ class FamilyEventNameWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalizations.of(context);
 
-    if (controller.selectedEventName.value == localization!.fifaOnline) {
-      return ListView.separated(
-        itemBuilder: (context, index) => AmountViewWiget(
-          isSpent: controller.filterFifaOnlineList[index].type ==
-              TransactionType.SPENT_MONEY,
-          amount: controller.filterFifaOnlineList[index].amount,
-          dateTime: controller.filterFifaOnlineList[index].date,
-          name: controller.filterFifaOnlineList[index].name,
-          relationship: controller.filterFifaOnlineList[index].relationship,
-          onTap: () {
-            controller.tapAmountWidget(
-                index: index,
-                transactionEntey: controller.filterFifaOnlineList[index]);
-          },
-        ).paddingSymmetric(horizontal: 4.w),
-        separatorBuilder: (context, index) => SizedBox(
-          height: 1.h,
-        ),
-        itemCount: controller.filterFifaOnlineList.length,
-      );
-    } else if (controller.selectedEventName.value ==
-        localization.firstBirthday) {
-      return ListView.separated(
-        itemBuilder: (context, index) => AmountViewWiget(
-          amount: controller.filterFirstBirthdayPartylIST[index].amount,
-          dateTime: controller.filterFirstBirthdayPartylIST[index].date,
-          name: controller.filterFirstBirthdayPartylIST[index].name,
-          relationship:
-              controller.filterFirstBirthdayPartylIST[index].relationship,
-          onTap: () {
-            controller.tapAmountWidget(
-                index: index,
-                transactionEntey:
-                    controller.filterFirstBirthdayPartylIST[index]);
-          },
-        ).paddingSymmetric(horizontal: 4.w),
-        separatorBuilder: (context, index) => SizedBox(
-          height: 1.h,
-        ),
-        itemCount: controller.filterFirstBirthdayPartylIST.length,
-      );
-    } else {
-      return ListView.separated(
-        itemBuilder: (context, index) => AmountViewWiget(
-          amount: controller.filterWeddingList[index].amount,
-          dateTime: controller.filterWeddingList[index].date,
-          name: controller.filterWeddingList[index].name,
-          relationship: controller.filterWeddingList[index].relationship,
-          onTap: () {
-            controller.tapAmountWidget(
-                index: index,
-                transactionEntey: controller.filterWeddingList[index]);
-          },
-        ).paddingSymmetric(horizontal: 4.w),
-        separatorBuilder: (context, index) => SizedBox(
-          height: 1.h,
-        ),
-        itemCount: controller.filterWeddingList.length,
-      );
-    }
+    return Container();
+
+    // if (controller.selectedEventName.value == localization!.fifaOnline) {
+    //   return ListView.separated(
+    //     itemBuilder: (context, index) => AmountViewWiget(
+    //       isSpent:
+    //           controller.filterEvent[index].type == TransactionType.SPENT_MONEY,
+    //       amount: controller.filterEvent[index].amount,
+    //       dateTime: controller.filterEvent[index].date,
+    //       name: controller.filterEvent[index].name,
+    //       relationship: controller.filterEvent[index].relationship,
+    //       onTap: () {
+    //         controller.tapAmountWidget(
+    //             index: index, transactionEntey: controller.filterEvent[index]);
+    //       },
+    //     ).paddingSymmetric(horizontal: 4.w),
+    //     separatorBuilder: (context, index) => SizedBox(
+    //       height: 1.h,
+    //     ),
+    //     itemCount: controller.filterEvent.length,
+    //   );
+    // } else if (controller.selectedEventName.value ==
+    //     localization.firstBirthday) {
+    //   return ListView.separated(
+    //     itemBuilder: (context, index) => AmountViewWiget(
+    //       amount: controller.filterFirstBirthdayPartylIST[index].amount,
+    //       dateTime: controller.filterFirstBirthdayPartylIST[index].date,
+    //       name: controller.filterFirstBirthdayPartylIST[index].name,
+    //       relationship:
+    //           controller.filterFirstBirthdayPartylIST[index].relationship,
+    //       onTap: () {
+    //         controller.tapAmountWidget(
+    //             index: index,
+    //             transactionEntey:
+    //                 controller.filterFirstBirthdayPartylIST[index]);
+    //       },
+    //     ).paddingSymmetric(horizontal: 4.w),
+    //     separatorBuilder: (context, index) => SizedBox(
+    //       height: 1.h,
+    //     ),
+    //     itemCount: controller.filterFirstBirthdayPartylIST.length,
+    //   );
+    // } else {
+    //   return ListView.separated(
+    //     itemBuilder: (context, index) => AmountViewWiget(
+    //       amount: controller.filterWeddingList[index].amount,
+    //       dateTime: controller.filterWeddingList[index].date,
+    //       name: controller.filterWeddingList[index].name,
+    //       relationship: controller.filterWeddingList[index].relationship,
+    //       onTap: () {
+    //         controller.tapAmountWidget(
+    //             index: index,
+    //             transactionEntey: controller.filterWeddingList[index]);
+    //       },
+    //     ).paddingSymmetric(horizontal: 4.w),
+    //     separatorBuilder: (context, index) => SizedBox(
+    //       height: 1.h,
+    //     ),
+    //     itemCount: controller.filterWeddingList.length,
+    //   );
+    // }
   }
 }

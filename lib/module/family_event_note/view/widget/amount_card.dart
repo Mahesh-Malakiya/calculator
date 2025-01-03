@@ -56,8 +56,7 @@ class AmountViewWiget extends StatelessWidget {
                               color: AppColors.primary,
                               borderRadius:
                                   BorderRadius.circular(AppSizes.radius_12)),
-                          child: Text(
-                                  '${relationship?.relationshipToLocalizedString(relationship!, context)}',
+                          child: Text('$relationship',
                                   style: AppTextStyles(context)
                                       .display12w500
                                       .copyWith(color: AppColors.whiteOff))

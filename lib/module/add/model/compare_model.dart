@@ -2,8 +2,8 @@ class FamilyEventModel {
   final String name;
   final String relationship;
   final String familyEvent;
-  final double totalReceived;
-  final double totalSpent;
+  double totalReceived; // Change to 'double' to allow modification
+  double totalSpent; // Change to 'double' to allow modification
 
   FamilyEventModel({
     required this.name,
@@ -33,5 +33,11 @@ class FamilyEventModel {
       'total_received': totalReceived,
       'total_spent': totalSpent,
     };
+  }
+
+  // Method to update the total received and total spent
+  void updateTotals(double received, double spent) {
+    totalReceived += received;
+    totalSpent += spent;
   }
 }

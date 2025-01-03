@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_calculator/config/color/app_color.dart';
 import 'package:flutter_calculator/config/color/app_text_style.dart';
 import 'package:flutter_calculator/config/theme/screen_utils.dart';
+import 'package:flutter_calculator/module/add/model/add_model.dart';
 import 'package:flutter_calculator/module/family_event_note/controller/family_event_note_controller.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
@@ -16,69 +17,36 @@ class ContactWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalizations.of(context);
 
-    return Column(
-      children: [
-        Obx(
-          () => controller.filterFifaOnlineList.isNotEmpty
-              ? Column(
-                  children: List.generate(
-                    1,
-                    (index) => familyCard(
-                      localization: localization!,
-                      context: context,
-                      lenth: controller.filterFifaOnlineList.length,
-                      familyEvent: localization!.fifaOnline,
-                      onTap: () {
-                        controller.selectedEventName.value =
-                            localization.fifaOnline;
-                        controller.isSelectedFamilyCard.value = true;
-                      },
-                    ),
-                  ),
-                )
-              : const SizedBox.shrink(),
-        ),
-        Obx(
-          () => controller.filterFirstBirthdayPartylIST.isNotEmpty
-              ? Column(
-                  children: List.generate(
-                    1,
-                    (index) => familyCard(
-                      localization: localization!,
-                      context: context,
-                      lenth: controller.filterFirstBirthdayPartylIST.length,
-                      familyEvent: localization!.firstBirthday,
-                      onTap: () {
-                        controller.selectedEventName.value =
-                            localization.firstBirthday;
-                        controller.isSelectedFamilyCard.value = true;
-                      },
-                    ),
-                  ),
-                )
-              : const SizedBox.shrink(),
-        ),
-        Obx(
-          () => controller.filterWeddingList.isNotEmpty
-              ? Column(
-                  children: List.generate(
-                    1,
-                    (index) => familyCard(
-                      localization: localization!,
-                      context: context,
-                      lenth: controller.filterWeddingList.length,
-                      familyEvent: localization!.wedding,
-                      onTap: () {
-                        controller.selectedEventName.value =
-                            localization.wedding;
-                        controller.isSelectedFamilyCard.value = true;
-                      },
-                    ),
-                  ),
-                )
-              : const SizedBox.shrink(),
-        ),
-      ],
+    return Obx(
+      () => Column(
+        children: [
+          Column(
+            children: List.generate(
+              controller.categorizedTransactions.keys.length,
+              (index) {
+                String familyEventName =
+                    controller.categorizedTransactions.keys.elementAt(index);
+
+                List<TransactionEntry> transactionsForEvent =
+                    controller.categorizedTransactions[familyEventName] ?? [];
+
+                int eventLength = transactionsForEvent.length;
+
+                return familyCard(
+                  localization: localization!,
+                  context: context,
+                  lenth: eventLength,
+                  familyEvent: familyEventName,
+                  onTap: () {
+                    controller.selectedEventName.value = familyEventName;
+                    controller.isSelectedFamilyCard.value = true;
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 

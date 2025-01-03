@@ -1,17 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_calculator/config/color/app_color.dart';
+import 'dart:developer';
+
 import 'package:flutter_calculator/constants/common_imports.dart';
 import 'package:flutter_calculator/data/database_helper.dart';
 import 'package:flutter_calculator/module/add/model/add_model.dart';
+import 'package:flutter_calculator/module/family_event_note/controller/family_event_note_controller.dart';
 import 'package:flutter_calculator/module/main/controller/main_controller.dart';
 import 'package:flutter_calculator/utils/extantion/app_extantion.dart';
 import 'package:flutter_calculator/utils/extantion/enum.dart';
-import 'package:get/get.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class AddController extends GetxController {
   final MainController mainController = Get.find<MainController>();
 
+  final DatabaseHelper dbHelper = DatabaseHelper();
   RxString familyEvent = RxString('');
   RxBool isEditable = RxBool(false);
 
@@ -44,6 +44,10 @@ class AddController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     upDateData();
+    addUniqueFamilyEventsData();
+    Future.delayed(Duration.zero, () {
+      addUniqueFamilyEvents();
+    });
   }
 
   Rx<DateTime> focusedDay = DateTime.now().obs;
@@ -51,6 +55,12 @@ class AddController extends GetxController {
 
   void onPageChanged(DateTime focusedDay) {
     this.focusedDay.value = focusedDay;
+  }
+
+  RxList<TransactionEntry> transactionsList = RxList();
+  Future<void> fetchTransactions() async {
+    List<TransactionEntry> transactions = await dbHelper.getTransactions();
+    transactionsList.value = transactions;
   }
 
   void validateForm() {
@@ -98,7 +108,7 @@ class AddController extends GetxController {
 
   void upDateData() {
     updateFamilyTextField(context);
-    updateFamilyEvent(0);
+    updateEvent(0);
     updateRelationTextField();
     updaterelationship(0);
     updateTransactionType(index: 0);
@@ -116,7 +126,6 @@ class AddController extends GetxController {
     'Money spent',
   ]);
   void updateTransactionType({required int index}) {
-    print(index);
     transactionType.value = filterItems[index] == 'Money received'
         ? TransactionType.RECIVED_MONEY
         : TransactionType.SPENT_MONEY;
@@ -129,6 +138,7 @@ class AddController extends GetxController {
     'Family',
     'Friends',
   ]);
+
   void updaterelationship(int index) {
     relationship.value = relationshipSelect[index] == 'Work'
         ? 'Work'
@@ -145,30 +155,50 @@ class AddController extends GetxController {
 
   /// EVENT
 
-  RxList<String> familyEventsSelect = RxList([
+  RxList<String> eventSelect = RxList([
     'FIFA Online',
     'First birthday party',
     'Wedding',
   ]);
 
-  void updateFamilyEvent(int index) {
-    familyEvent.value = familyEventsSelect[index] == 'FIFA Online'
+  void addUniqueFamilyEvents() {
+    // Assuming getUniqueFamilyEvents() returns a List<String>
+    List<String> uniqueEvents = getUniqueFamilyEvents();
+    log('*************${uniqueEvents.length}');
+    // Add all unique events to relationshipSelect
+    eventSelect.addAll(uniqueEvents);
+    update();
+    update();
+    log('message::::${eventSelect.length}');
+  }
+
+  List<String> getUniqueFamilyEvents() {
+    return transactionsList
+        .map((transaction) => transaction.familyEvent)
+        .toSet()
+        .toList();
+  }
+
+  List<String> uniqueEvents = [];
+  void addUniqueFamilyEventsData() {
+    uniqueEvents = getUniqueFamilyEvents();
+  }
+
+  void updateEvent(int index) {
+    familyEvent.value = eventSelect[index] == 'FIFA Online'
         ? 'FIFA Online'
-        : familyEvent.value = familyEventsSelect[index] == 'Wedding'
+        : familyEvent.value = eventSelect[index] == 'Wedding'
             ? 'Wedding'
             : 'First birthday party';
   }
 
   void updateFamilyTextField(BuildContext context) {
     familyEventSelectController.value.clear();
-    // Update the TextEditingController's text whenever the selection changes
-    familyEventSelectController.value.text =
-        familyEventsSelect[isSelectedFamily.value]
-            .toEventExtensionApplocalizations(context);
+    familyEventSelectController.value.text = eventSelect[isSelectedFamily.value]
+        .toEventExtensionApplocalizations(context);
   }
 
   /// update on data base...
-  final DatabaseHelper dbHelper = DatabaseHelper();
 
   void onSave() async {
     // Validate required fields before saving

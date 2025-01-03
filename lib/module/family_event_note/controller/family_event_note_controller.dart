@@ -23,7 +23,6 @@ class FamilyEventNoteController extends GetxController {
     'Contact'
   ].obs;
 
-  RxList<TransactionEntry> transactionsList = RxList();
   FocusNode textFocusNode = FocusNode();
   RxList<FamilyEventModel> compareList = RxList();
   RxList<TransactionEntry> spentMoneyList = RxList();
@@ -34,6 +33,31 @@ class FamilyEventNoteController extends GetxController {
   Rx<String> filterName = ''.obs;
   Rx<Relationship?> filterRelationship = Rxn<Relationship>();
   Rx<FamilyEvent?> filterFamilyEvent = Rxn<FamilyEvent>();
+
+  ///
+  ///
+  RxList<TransactionEntry> transactionsList = RxList();
+  Map<String, RxList<TransactionEntry>> categorizedTransactions = {};
+  List<String> uniqueEvents = [];
+
+  void createCategorizedTransactionLists() {
+    // Clear previous data
+    categorizedTransactions.clear();
+
+    for (var event in uniqueEvents) {
+      // Filter transactions for the current event
+      var filteredTransactions = transactionsList
+          .where((transaction) => transaction.familyEvent == event)
+          .toList();
+
+      // Add to categorized map
+      categorizedTransactions[event] =
+          RxList<TransactionEntry>.from(filteredTransactions);
+    }
+  }
+
+  ///
+  ///
   @override
   void onInit() {
     super.onInit();
@@ -43,12 +67,14 @@ class FamilyEventNoteController extends GetxController {
   void getAddFunction() async {
     fetchTransactions().then(
       (value) {
+        getUniqueFamilyEvents();
+        addUniqueFamilyEvents();
         filterSpentMoney();
         filterReaciveMoney();
         calculateTotalAmountSpentMoney();
         calculateTotalAmountReacive();
         fetchCompareList();
-        filterEvents();
+        createCategorizedTransactionLists();
         calculateTotal();
       },
     );
@@ -95,10 +121,40 @@ class FamilyEventNoteController extends GetxController {
     transactionsList.value = transactions;
   }
 
+  List<String> getUniqueFamilyEvents() {
+    return transactionsList
+        .map((transaction) => transaction.familyEvent)
+        .toSet()
+        .toList();
+  }
+
+  void addUniqueFamilyEvents() {
+    uniqueEvents = getUniqueFamilyEvents();
+  }
+
   Future<void> fetchCompareList() async {
     List<FamilyEventModel> transactions =
         await dbHelper.getTransactionsByCompare();
-    compareList.value = transactions;
+
+    // Create a map to store unique family events (based on name and familyEvent)
+    Map<String, FamilyEventModel> uniqueEventsMap = {};
+
+    // Loop through the transactions and aggregate data for the same name and familyEvent
+    for (var transaction in transactions) {
+      String key = '${transaction.name}_${transaction.familyEvent}';
+
+      if (uniqueEventsMap.containsKey(key)) {
+        // If the entry already exists, aggregate the data using updateTotals
+        uniqueEventsMap[key]!
+            .updateTotals(transaction.totalReceived, transaction.totalSpent);
+      } else {
+        // If it's a new entry, add it to the map
+        uniqueEventsMap[key] = transaction;
+      }
+    }
+
+    // Convert the map values back to a list
+    compareList.value = uniqueEventsMap.values.toList();
   }
 
   void filterSpentMoney() async {
@@ -120,53 +176,6 @@ class FamilyEventNoteController extends GetxController {
         reciveMoneyList.add(transaction);
       }
     }
-  }
-
-  RxList<TransactionEntry> filterFifaOnlineList = RxList();
-  void filterFifaOnline() {
-    // Clear the spentMoneyList before adding filtered transactions
-    filterFifaOnlineList.clear();
-
-    // Loop through all transactions and check if the type is SPENT_MONEY
-    for (var transaction in transactionsList) {
-      if (transaction.familyEvent == FamilyEvent.FIFA_ONLINE) {
-        // Add the transaction to the spentMoneyList
-        filterFifaOnlineList.add(transaction);
-      }
-    }
-  }
-
-  RxList<TransactionEntry> filterFirstBirthdayPartylIST = RxList();
-  void filterFirstBirthdayParty() {
-    // Clear the spentMoneyList before adding filtered transactions
-    filterFirstBirthdayPartylIST.clear();
-
-    // Loop through all transactions and check if the type is SPENT_MONEY
-    for (var transaction in transactionsList) {
-      if (transaction.familyEvent == FamilyEvent.FIRST_BIRTHDAY_PARTY) {
-        // Add the transaction to the spentMoneyList
-        filterFirstBirthdayPartylIST.add(transaction);
-      }
-    }
-  }
-
-  RxList<TransactionEntry> filterWeddingList = RxList();
-  void filterWedding() {
-    // Clear the spentMoneyList before adding filtered transactions
-    filterWeddingList.clear();
-
-    // Loop through all transactions and check if the type is SPENT_MONEY
-    for (var transaction in transactionsList) {
-      if (transaction.familyEvent == FamilyEvent.WEDDING) {
-        filterWeddingList.add(transaction);
-      }
-    }
-  }
-
-  void filterEvents() {
-    filterWedding();
-    filterFirstBirthdayParty();
-    filterFifaOnline();
   }
 
   void calculateAmount() {

@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
           Locale('en', ''), // English
           Locale('ko', ''), // Korean
         ],
-        locale: Locale('ko'),
+        locale: Locale('en'),
         fallbackLocale: const Locale('ko', ''),
       );
     });
