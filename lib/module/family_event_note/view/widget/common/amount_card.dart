@@ -3,7 +3,6 @@ import 'package:flutter_calculator/config/color/app_color.dart';
 import 'package:flutter_calculator/config/color/app_text_style.dart';
 import 'package:flutter_calculator/config/theme/screen_utils.dart';
 import 'package:flutter_calculator/utils/extantion/app_extantion.dart';
-import 'package:flutter_calculator/utils/extantion/enum.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';

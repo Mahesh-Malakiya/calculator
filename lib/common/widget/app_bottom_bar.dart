@@ -15,6 +15,7 @@ class AppBottomBar extends StatelessWidget {
     super.key,
   });
   final controller = Get.find<MainController>();
+
   final familyController = Get.isRegistered<FamilyEventNoteController>()
       ? Get.find<FamilyEventNoteController>()
       : Get.put<FamilyEventNoteController>(FamilyEventNoteController());
@@ -39,8 +40,6 @@ class AppBottomBar extends StatelessWidget {
               controller.selectedIndex.value = 0;
               addController.transactionType.value =
                   TransactionType.RECIVED_MONEY;
-              addController.relationship.value = Relationship.WORK.name;
-              addController.familyEvent.value = FamilyEvent.FIFA_ONLINE.name;
               familyController.getAddFunction();
               addController.isEditable.value = false;
               addController.nameController.clear();

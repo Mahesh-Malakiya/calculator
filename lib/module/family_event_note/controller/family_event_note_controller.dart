@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_calculator/data/database_helper.dart';
 import 'package:flutter_calculator/module/add/controller/add_controller.dart';
@@ -16,12 +14,7 @@ class FamilyEventNoteController extends GetxController {
   RxBool isSelectedFamilyCard = RxBool(false);
   RxString selectedEventName = RxString('');
   final textEditingController = TextEditingController();
-  final filterItems = <String>[
-    'Received money',
-    'Disbursed money',
-    'Comparison',
-    'Contact'
-  ].obs;
+  final filterItems = <String>['받은 돈', '나간 돈', '비교', '연락'].obs;
 
   FocusNode textFocusNode = FocusNode();
   RxList<FamilyEventModel> compareList = RxList();
@@ -102,14 +95,12 @@ class FamilyEventNoteController extends GetxController {
   void tapAmountWidget(
       {required int index, required TransactionEntry transactionEntey}) {
     if (!Get.isRegistered<AddController>()) {
-      // Register AddController if it's not registered yet
       Get.put(AddController());
     }
 
     // Now safely access the AddController
     addController = Get.find<AddController>();
     addController.isEditable.value = true;
-    log('message:::${transactionEntey.id!}');
     addController.fetchAndPopulateTransaction(transactionEntey.id!);
     mainController.selectedIndex.value = 1;
     mainController.editIndexedData.value = index;

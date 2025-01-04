@@ -107,6 +107,39 @@ class DatabaseHelper {
     return null;
   }
 
+  // Get a list of unique family events
+  Future<List<String>> getUniqueFamilyEvents() async {
+    final db = await database;
+
+    // Query to get distinct familyEvent values
+    final List<Map<String, dynamic>> maps = await db.rawQuery('''
+      SELECT DISTINCT familyEvent FROM $_tableName WHERE familyEvent IS NOT NULL
+    ''');
+
+    // Extract the familyEvent values from the query result
+    return maps.map((map) => map['familyEvent'] as String).toList();
+  }
+
+  // Get a list of unique family events and their associated relationships
+  Future<List<Map<String, String>>>
+      getUniqueFamilyEventsWithRelationships() async {
+    final db = await database;
+
+    // Query to get distinct familyEvent and relationship pairs
+    final List<Map<String, dynamic>> maps = await db.rawQuery('''
+    SELECT DISTINCT familyEvent, relationship FROM $_tableName 
+    WHERE familyEvent IS NOT NULL AND relationship IS NOT NULL
+  ''');
+
+    // Convert the query result to a list of maps
+    return maps.map((map) {
+      return {
+        'familyEvent': map['familyEvent'] as String,
+        'relationship': map['relationship'] as String,
+      };
+    }).toList();
+  }
+
   // Update a transaction
   Future<int> updateTransaction(TransactionEntry transaction) async {
     final db = await database;

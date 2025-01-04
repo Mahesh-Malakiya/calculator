@@ -1,8 +1,8 @@
+import 'package:flutter_calculator/constants/common_imports.dart';
 import 'package:flutter_calculator/module/family_event_note/controller/family_event_note_controller.dart';
+import 'package:flutter_calculator/module/family_event_note/view/widget/common/monet_spent_reacive.dart';
 import 'package:flutter_calculator/module/family_event_note/view/widget/tabs/compare_widget.dart';
 import 'package:flutter_calculator/module/family_event_note/view/widget/tabs/contact_widget.dart';
-import 'package:flutter_calculator/module/family_event_note/view/widget/common/monet_spent_reacive.dart';
-import 'package:flutter_calculator/constants/common_imports.dart';
 
 class BuildAllTabs extends StatelessWidget {
   const BuildAllTabs({super.key});

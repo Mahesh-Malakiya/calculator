@@ -1,7 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter_calculator/config/theme/screen_utils.dart';
+import 'package:flutter_calculator/constants/common_imports.dart';
 import 'package:flutter_calculator/module/add/model/add_model.dart';
 import 'package:flutter_calculator/module/family_event_note/controller/family_event_note_controller.dart';
-import 'package:flutter_calculator/constants/common_imports.dart';
 
 class ContactWidget extends StatelessWidget {
   ContactWidget({super.key});
@@ -12,36 +14,42 @@ class ContactWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final localization = AppLocalizations.of(context);
 
-    return Obx(
-      () => Column(
-        children: [
-          Column(
-            children: List.generate(
-              controller.categorizedTransactions.keys.length,
-              (index) {
-                String familyEventName =
-                    controller.categorizedTransactions.keys.elementAt(index);
+    return Column(
+      children: [
+        Obx(
+          () {
+            log('${''.obs}');
+            return Column(
+              children: List.generate(
+                controller.categorizedTransactions.keys.length,
+                (index) {
+                  String familyEventName =
+                      controller.categorizedTransactions.keys.elementAt(index);
 
-                List<TransactionEntry> transactionsForEvent =
-                    controller.categorizedTransactions[familyEventName] ?? [];
+                  List<TransactionEntry> transactionsForEvent =
+                      controller.categorizedTransactions[familyEventName] ?? [];
 
-                int eventLength = transactionsForEvent.length;
+                  int eventLength = transactionsForEvent.length;
 
-                return familyCard(
-                  localization: localization!,
-                  context: context,
-                  lenth: eventLength,
-                  familyEvent: familyEventName,
-                  onTap: () {
-                    controller.selectedEventName.value = familyEventName;
-                    controller.isSelectedFamilyCard.value = true;
-                  },
-                );
-              },
-            ),
-          ),
-        ],
-      ),
+                  return familyCard(
+                    localization: localization!,
+                    context: context,
+                    lenth: eventLength,
+                    familyEvent: familyEventName,
+                    onTap: () {
+                      log('Transactions for Selected Event: ${transactionsForEvent.map((transaction) => transaction.toJson()).toList()}');
+
+                      log('message ::: ${familyEventName}');
+                      controller.selectedEventName.value = familyEventName;
+                      controller.isSelectedFamilyCard.value = true;
+                    },
+                  );
+                },
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 

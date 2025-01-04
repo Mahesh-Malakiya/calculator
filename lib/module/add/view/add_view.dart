@@ -9,11 +9,9 @@ import 'package:flutter_calculator/module/add/controller/add_controller.dart';
 import 'package:flutter_calculator/module/add/view/widget/calander.dart';
 import 'package:flutter_calculator/module/add/view/widget/title_with_textfield.dart';
 import 'package:flutter_calculator/module/family_event_note/view/widget/common/select_filter.dart';
-import 'package:flutter_calculator/utils/extantion/app_extantion.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
-import 'package:table_calendar/table_calendar.dart';
 
 class AddView extends StatelessWidget {
   const AddView({super.key});
@@ -185,7 +183,7 @@ class AddView extends StatelessWidget {
                             withoutSerchIcon: true,
                             title: localization.familyEventsSelect,
                             hintText: localization.enterFamilyEvent,
-                            labelText: '',
+
                             textEditingController:
                                 controller.familyEventSelectController.value,
                             showErrorMessage: controller
@@ -203,19 +201,21 @@ class AddView extends StatelessWidget {
                             height: 2.h,
                           ),
                           Container(
+                            height: 20.h,
                             decoration: BoxDecoration(
                                 color: AppColors.accent,
                                 borderRadius:
                                     BorderRadius.circular(AppSizes.radius_8)),
                             child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: controller.eventSelect.length,
                               padding: EdgeInsets.symmetric(vertical: 2.h),
                               itemBuilder: (context, index) => Obx(
                                 () => SelectFilter(
                                   onTap: () {
-                                    controller.updateFamilyTextField(context);
+                                    controller.isSelectedFamily.value = index;
+                                    controller.familyEventSelectController.value
+                                        .text = controller.eventSelect[index];
                                   },
                                   isSelecte:
                                       index == controller.isSelectedFamily.value
@@ -227,34 +227,26 @@ class AddView extends StatelessWidget {
                             ),
                           ).paddingSymmetric(horizontal: 4.w),
                           TitleWithTextfield(
-                            enabled: false,
+                            enabled: true,
                             withoutSerchIcon: true,
                             title: localization.relationshipSelect,
-                            hintText: localization.relationshipSelect,
+                            hintText: localization.enterrelationship,
                             textEditingController:
                                 controller.relationShipSelectController.value,
-                            showErrorMessage: controller
-                                .showErrorMessagerelation, // Pass RxBool here
-                            onChanged: (value) {
-                              if (value == null || value.isEmpty) {
-                                controller.showErrorMessagerelation.value =
-                                    true;
-                                return 'Name cannot be empty';
-                              }
-                              controller.showErrorMessagerelation.value = false;
-                              return null;
+                            onChanged: (inputText) {
+                              controller.isSelectedRelation.value = -1;
                             },
                           ),
                           SizedBox(
                             height: 2.h,
                           ),
                           Container(
+                            height: 20.h,
                             decoration: BoxDecoration(
                                 color: AppColors.accent,
                                 borderRadius:
                                     BorderRadius.circular(AppSizes.radius_8)),
                             child: ListView.builder(
-                              physics: const NeverScrollableScrollPhysics(),
                               shrinkWrap: true,
                               itemCount: controller.relationshipSelect.length,
                               padding: EdgeInsets.symmetric(vertical: 2.h),
@@ -262,9 +254,9 @@ class AddView extends StatelessWidget {
                                 () => SelectFilter(
                                   onTap: () {
                                     controller.isSelectedRelation.value = index;
-                                    controller.updateRelationTextField();
-                                    controller.updaterelationship(
-                                        controller.isSelectedRelation.value);
+                                    controller.relationShipSelectController
+                                            .value.text =
+                                        controller.relationshipSelect[index];
                                   },
                                   isSelecte: index ==
                                           controller.isSelectedRelation.value
