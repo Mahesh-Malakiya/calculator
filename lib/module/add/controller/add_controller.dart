@@ -116,16 +116,18 @@ class AddController extends GetxController {
   //     log('Error fetching family events and relationships: $e');
   //   }
   // }
-
   void validateForm() {
+    // Check for empty fields
     showErrorMessageName.value = nameController.text.isEmpty;
     showErrorMessageAmount.value = amountController.text.isEmpty;
-    showErrorMessagePhone.value = phoneNumberController.text.isEmpty;
+    showErrorMessagePhone.value = phoneNumberController.text.isEmpty ||
+        phoneNumberController.text.length < 8;
     showErrorMessageevent.value =
         familyEventSelectController.value.text.isEmpty;
     showErrorMessagerelation.value =
         relationShipSelectController.value.text.isEmpty;
 
+    // Only proceed if all validations pass
     if (showErrorMessageName.isFalse &&
         showErrorMessageAmount.isFalse &&
         showErrorMessagePhone.isFalse &&

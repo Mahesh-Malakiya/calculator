@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_calculator/common/widget/app_appbar.dart';
 import 'package:flutter_calculator/config/color/app_color.dart';
 import 'package:flutter_calculator/config/color/app_text_style.dart';
@@ -187,28 +188,17 @@ class AddView extends StatelessWidget {
                             showErrorMessage: controller
                                 .showErrorMessagePhone, // Pass RxBool here
                             onChanged: (value) {
-                              // Check if any invalid characters (.,*#) are in the input
-                              if (value != null && value.isNotEmpty) {
-                                bool containsInvalidChars =
-                                    RegExp(r'[.,*#]').hasMatch(value);
-
-                                if (containsInvalidChars) {
-                                  // If invalid characters are found, stop updating the value and show an error
-                                  controller.showErrorMessagePhone.value = true;
-                                  return; // Prevent further processing
-                                } else {
-                                  // If no invalid characters, proceed with updating the text
-                                  controller.showErrorMessagePhone.value =
-                                      false;
-                                  controller.phoneNumberController.text =
-                                      value.replaceAll(RegExp(r'[^0-9]'),
-                                          ''); // Keep only numbers
-                                }
-                              } else {
-                                // If the value is empty, show the error message
+                              if (value == null || value.length < 8) {
                                 controller.showErrorMessagePhone.value = true;
+                              } else {
+                                controller.showErrorMessagePhone.value = false;
                               }
                             },
+
+                            inputFormatters: [
+                              // Automatically filter out non-numeric characters
+                              FilteringTextInputFormatter.digitsOnly,
+                            ],
                           ),
                           TitleWithTextfield(
                             enabled: true,
@@ -311,9 +301,7 @@ class AddView extends StatelessWidget {
                           Obx(
                             () => GestureDetector(
                               onTap: () {
-                                if (controller.showErrorMessagePhone.value) {
-                                  controller.validateForm();
-                                }
+                                controller.validateForm();
                               },
                               child: Container(
                                 width: 92.w,

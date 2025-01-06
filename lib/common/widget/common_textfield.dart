@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_calculator/config/color/app_color.dart';
 import 'package:flutter_calculator/config/color/app_text_style.dart';
 import 'package:flutter_calculator/config/theme/screen_utils.dart';
@@ -17,6 +18,7 @@ class SquareBorderTextField extends StatelessWidget {
     this.withoutSerchIcon = false,
     this.focusNode,
     this.onChanged,
+    this.inputFormatters,
     this.validator, // Add validator property
     super.key,
   });
@@ -30,6 +32,7 @@ class SquareBorderTextField extends StatelessWidget {
   final bool? enabled;
   final FocusNode? focusNode;
   final Function(String)? onChanged;
+  final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator; // Validation function
 
   @override
@@ -44,6 +47,7 @@ class SquareBorderTextField extends StatelessWidget {
 
     if (withoutSerchIcon == true) {
       return TextFormField(
+        inputFormatters: inputFormatters,
         enabled: enabled,
         keyboardType: keyboardType,
         controller: textEditingController,
@@ -88,6 +92,7 @@ class SquareBorderTextField extends StatelessWidget {
         Expanded(
           child: SizedBox(
             child: TextFormField(
+              inputFormatters: inputFormatters,
               onChanged: onChanged,
               focusNode: focusNode,
               controller: textEditingController,

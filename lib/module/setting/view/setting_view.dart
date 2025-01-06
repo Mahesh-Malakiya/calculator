@@ -26,27 +26,27 @@ class SettingView extends StatelessWidget {
                       SizedBox(
                         height: 2.h,
                       ),
-                      Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () {
-                              Get.back();
-                            },
-                            child: Icon(
+                      GestureDetector(
+                        onTap: () {
+                          Get.back();
+                        },
+                        child: Row(
+                          children: [
+                            Icon(
                               Icons.arrow_back_ios_new,
                               color: AppColors.whiteOff,
                             ),
-                          ),
-                          SizedBox(
-                            width: 2.w,
-                          ),
-                          Text(
-                            localizations!.setting,
-                            style: AppTextStyles(context)
-                                .display20w700
-                                .copyWith(color: AppColors.whiteOff),
-                          )
-                        ],
+                            SizedBox(
+                              width: 2.w,
+                            ),
+                            Text(
+                              localizations!.setting,
+                              style: AppTextStyles(context)
+                                  .display20w700
+                                  .copyWith(color: AppColors.whiteOff),
+                            )
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: 3.h,
@@ -70,6 +70,7 @@ class SettingView extends StatelessWidget {
                         height: 2.h,
                       ),
                       GestureDetector(
+                        behavior: HitTestBehavior.opaque,
                         onTap: () async {
                           final dbHelper = DatabaseHelper();
                           // Use Future.microtask to delay the operation slightly
@@ -99,6 +100,7 @@ class SettingView extends StatelessWidget {
                         height: 2.h,
                       ),
                       GestureDetector(
+                        behavior: HitTestBehavior.opaque,
                         onTap: () async {
                           final dbHelper = DatabaseHelper();
                           await dbHelper.requestStoragePermission(context);
@@ -124,6 +126,7 @@ class SettingView extends StatelessWidget {
                         height: 2.h,
                       ),
                       GestureDetector(
+                        behavior: HitTestBehavior.opaque,
                         onTap: () async {
                           // Show a confirmation dialog before resetting
                           Get.dialog(

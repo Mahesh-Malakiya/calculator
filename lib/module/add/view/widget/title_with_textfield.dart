@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter_calculator/common/widget/common_textfield.dart';
 import 'package:flutter_calculator/constants/common_imports.dart';
 
@@ -14,6 +15,7 @@ class TitleWithTextfield extends StatelessWidget {
     this.validator,
     this.showErrorMessage,
     this.onChanged,
+    this.inputFormatters,
     super.key,
   });
 
@@ -25,6 +27,7 @@ class TitleWithTextfield extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool? withoutSerchIcon;
   final bool? enabled;
+  final List<TextInputFormatter>? inputFormatters;
   final RxBool? showErrorMessage;
   final String? Function(String?)? validator;
   final String? Function(String?)? onChanged;
@@ -65,6 +68,7 @@ class TitleWithTextfield extends StatelessWidget {
         Form(
           autovalidateMode: AutovalidateMode.onUserInteraction,
           child: SquareBorderTextField(
+            inputFormatters: inputFormatters,
             enabled: enabled,
             labelText: labelText,
             keyboardType: keyboardType,
