@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return Sizer(builder: (context, orientation, screenType) {
       return GetMaterialApp(
-        title: 'Sherry',
+        title: '경조사노트',
         debugShowCheckedModeBanner: false,
         initialRoute: AppPages.INITIAL,
         getPages: AppPages.routes,
@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
           Locale('en', ''), // English
           Locale('ko', ''), // Korean
         ],
-        locale: const Locale('en'),
+        locale: const Locale('ko'),
         fallbackLocale: const Locale('ko', ''),
       );
     });

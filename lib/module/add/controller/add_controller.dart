@@ -71,10 +71,17 @@ class AddController extends GetxController {
 
       // Iterate over the results and add familyEvent and relationship to the lists
       for (var item in results) {
-        eventSelect
-            .add(item['familyEvent'] ?? ''); // Default to empty string if null
-        relationshipSelect
-            .add(item['relationship'] ?? ''); // Default to empty string if null
+        final event =
+            item['familyEvent'] ?? ''; // Default to empty string if null
+        final relationship =
+            item['relationship'] ?? ''; // Default to empty string if null
+
+        // Only add to the lists if the pair of event and relationship doesn't already exist
+        if (!relationshipSelect.contains(relationship) &&
+            !eventSelect.contains(event)) {
+          relationshipSelect.add(relationship);
+          eventSelect.add(event);
+        }
       }
 
       // Log the results to check the values
@@ -85,6 +92,30 @@ class AddController extends GetxController {
       log('Error fetching family events and relationships: $e');
     }
   }
+
+  // Future<void> fetchFamilyEventsWithRelationships() async {
+  //   try {
+  //     // Fetch unique familyEvent and relationship pairs from the database
+  //     final results = await dbHelper.getUniqueFamilyEventsWithRelationships();
+
+  //     // Clear the existing lists before adding new data
+
+  //     // Iterate over the results and add familyEvent and relationship to the lists
+  //     for (var item in results) {
+  //       eventSelect
+  //           .add(item['familyEvent'] ?? ''); // Default to empty string if null
+  //       relationshipSelect
+  //           .add(item['relationship'] ?? ''); // Default to empty string if null
+  //     }
+
+  //     // Log the results to check the values
+  //     log('Fetched family events and relationships: $results');
+  //     log('Event Select List: $eventSelect');
+  //     log('Relationship Select List: $relationshipSelect');
+  //   } catch (e) {
+  //     log('Error fetching family events and relationships: $e');
+  //   }
+  // }
 
   void validateForm() {
     showErrorMessageName.value = nameController.text.isEmpty;
@@ -131,6 +162,7 @@ class AddController extends GetxController {
 
   void upDateData() {
     updateTransactionType(index: 0);
+    update();
   }
 
   void updateTransaction(TransactionEntry transaction) async {
@@ -191,6 +223,8 @@ class AddController extends GetxController {
     return true;
   }
 
+  RxInt isTappedEditSave = RxInt(0);
+
   void onEdit() async {
     if (!validateInputs()) return;
 
@@ -203,17 +237,20 @@ class AddController extends GetxController {
       phoneNumber: phoneNumberController.text,
       familyEvent: familyEventSelectController.value.text,
       relationship: relationShipSelectController.value.text,
-      note: noteController.text.isNotEmpty ? noteController.text : null,
+      note: noteController.text,
       memo: null,
       createdAt: DateTime.now(),
       updatedAt: DateTime.now(),
     );
 
     await dbHelper.updateTransaction(editTransaction);
+    if (isTappedEditSave.value == 0) {
+      isTappedEditSave.value = 1;
+      fetchFamilyEventsWithRelationships();
+    }
 
     // Refresh transactions and clear the form
     await refreshTransactions();
-    fetchFamilyEventsWithRelationships();
   }
 
   void clearForm() {
@@ -232,10 +269,12 @@ class AddController extends GetxController {
     required String phoneNumber,
     required String familyEvent,
     required String relationship,
+    required String note,
     required TransactionType transactionTyp,
   }) {
     transactionType.value = transactionTyp;
     nameController.text = name;
+    noteController.text = note;
     amountController.text = amount.toString();
     phoneNumberController.text = phoneNumber;
     familyEventSelectController.value.text = familyEvent;
@@ -249,14 +288,14 @@ class AddController extends GetxController {
     final selectedTransaction = await dbHelper.getTransactionById(id);
     if (selectedTransaction != null) {
       populateData(
-        id: selectedTransaction.id!,
-        name: selectedTransaction.name,
-        amount: selectedTransaction.amount,
-        phoneNumber: selectedTransaction.phoneNumber,
-        familyEvent: selectedTransaction.familyEvent,
-        relationship: selectedTransaction.relationship,
-        transactionTyp: selectedTransaction.type,
-      );
+          id: selectedTransaction.id!,
+          name: selectedTransaction.name,
+          amount: selectedTransaction.amount,
+          phoneNumber: selectedTransaction.phoneNumber,
+          familyEvent: selectedTransaction.familyEvent,
+          relationship: selectedTransaction.relationship,
+          transactionTyp: selectedTransaction.type,
+          note: selectedTransaction.note ?? '');
     }
   }
 }

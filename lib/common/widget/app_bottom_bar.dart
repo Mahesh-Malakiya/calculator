@@ -50,6 +50,7 @@ class AppBottomBar extends StatelessWidget {
               addController.noteController.clear();
               addController.isSelectedFamily.value = -1;
               addController.isSelectedRelation.value = -1;
+              addController.isTappedEditSave.value = 0;
             },
             child: SizedBox(
               width: 50.w,
@@ -84,6 +85,8 @@ class AppBottomBar extends StatelessWidget {
           GestureDetector(
             onTap: () {
               controller.selectedIndex.value = 1;
+              addController.isSelected.value = 0;
+              addController.upDateData();
             },
             behavior: HitTestBehavior.opaque,
             child: SizedBox(

@@ -41,6 +41,7 @@ class AddView extends StatelessWidget {
                   controller.clearForm();
                   controller.isSelectedFamily.value = -1;
                   controller.isSelectedRelation.value = -1;
+                  controller.isTappedEditSave.value = 0;
                   log('after : controller.mainController.selectedIndex ::: ${controller.mainController.selectedIndex.value}');
                 }
               }
@@ -91,7 +92,7 @@ class AddView extends StatelessWidget {
                                         controller.isSelected.value = index;
 
                                         controller.updateTransactionType(
-                                          index: controller.isSelected.value,
+                                          index: index,
                                         );
                                       },
                                       isSelecte:

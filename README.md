@@ -30,3 +30,4 @@ samples, guidance on mobile development, and a full API reference.
 - flutter pub get
 - flutter pub run build_runner build --delete-conflicting-outputs
 - flutter gen-l10n
+- flutter packages pub run flutter_launcher_icons:main
