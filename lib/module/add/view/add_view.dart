@@ -187,7 +187,27 @@ class AddView extends StatelessWidget {
                             showErrorMessage: controller
                                 .showErrorMessagePhone, // Pass RxBool here
                             onChanged: (value) {
-                              controller.clearErrorStates('amount');
+                              // Check if any invalid characters (.,*#) are in the input
+                              if (value != null && value.isNotEmpty) {
+                                bool containsInvalidChars =
+                                    RegExp(r'[.,*#]').hasMatch(value);
+
+                                if (containsInvalidChars) {
+                                  // If invalid characters are found, stop updating the value and show an error
+                                  controller.showErrorMessagePhone.value = true;
+                                  return; // Prevent further processing
+                                } else {
+                                  // If no invalid characters, proceed with updating the text
+                                  controller.showErrorMessagePhone.value =
+                                      false;
+                                  controller.phoneNumberController.text =
+                                      value.replaceAll(RegExp(r'[^0-9]'),
+                                          ''); // Keep only numbers
+                                }
+                              } else {
+                                // If the value is empty, show the error message
+                                controller.showErrorMessagePhone.value = true;
+                              }
                             },
                           ),
                           TitleWithTextfield(
@@ -291,7 +311,9 @@ class AddView extends StatelessWidget {
                           Obx(
                             () => GestureDetector(
                               onTap: () {
-                                controller.validateForm();
+                                if (controller.showErrorMessagePhone.value) {
+                                  controller.validateForm();
+                                }
                               },
                               child: Container(
                                 width: 92.w,

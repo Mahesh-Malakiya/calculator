@@ -176,15 +176,12 @@ class AddController extends GetxController {
   }
 
   void onSave() async {
-    // Validate required fields before saving
-
     if (nameController.text.isEmpty ||
         phoneNumberController.text.isEmpty ||
         amountController.text.isEmpty) {
       return;
     }
 
-    // Create a new Transaction object
     final newTransaction = TransactionEntry(
       type: transactionType.value,
       date: selectedDay.value,
@@ -249,7 +246,6 @@ class AddController extends GetxController {
       fetchFamilyEventsWithRelationships();
     }
 
-    // Refresh transactions and clear the form
     await refreshTransactions();
   }
 
