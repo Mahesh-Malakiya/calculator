@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_calculator/data/database_helper.dart';
 import 'package:flutter_calculator/module/add/controller/add_controller.dart';
@@ -17,9 +19,7 @@ class FamilyEventNoteController extends GetxController {
   final filterItems = <String>['받은 돈', '나간 돈', '비교', '연락'].obs;
 
   FocusNode textFocusNode = FocusNode();
-  RxList<FamilyEventModel> compareList = RxList();
-  RxList<TransactionEntry> spentMoneyList = RxList();
-  RxList<TransactionEntry> reciveMoneyList = RxList();
+
   final mainController = Get.find<MainController>();
   late AddController addController;
   // Filter parameters
@@ -30,6 +30,9 @@ class FamilyEventNoteController extends GetxController {
   ///
   ///
   RxList<TransactionEntry> transactionsList = RxList();
+  RxList<FamilyEventModel> compareList = RxList();
+  RxList<TransactionEntry> spentMoneyList = RxList();
+  RxList<TransactionEntry> reciveMoneyList = RxList();
   Map<String, RxList<TransactionEntry>> categorizedTransactions = {};
   List<String> uniqueEvents = [];
 
@@ -79,15 +82,34 @@ class FamilyEventNoteController extends GetxController {
   }
 
   RxList<TransactionEntry> filteredTransactions = RxList<TransactionEntry>();
-  void searchTransactions(String query) {
-    if (query.isEmpty) {
-      filteredTransactions.assignAll(transactionsList);
+
+  void filterTransactionsBasedOnSelection() {
+    if (isSelected.value == 0) {
+      filteredTransactions.assignAll(reciveMoneyList);
+    } else if (isSelected.value == 1) {
+      filteredTransactions.assignAll(spentMoneyList);
     } else {
+      filteredTransactions.assignAll(transactionsList);
+    }
+  }
+
+  void searchTransactions(String query) {
+    // First, filter based on selected list
+    filterTransactionsBasedOnSelection();
+
+    // Then, filter the selected list by the search query
+    if (query.isEmpty) {
+      // If the query is empty, show all items from the filtered list
+      filteredTransactions.refresh();
+    } else {
+      // Filter based on the search query
       filteredTransactions.assignAll(
-        transactionsList.where(
-          (transaction) =>
-              transaction.name.toLowerCase().contains(query.toLowerCase()),
-        ),
+        filteredTransactions
+            .where(
+              (transaction) =>
+                  transaction.name.toLowerCase().contains(query.toLowerCase()),
+            )
+            .toList(),
       );
     }
   }
@@ -110,6 +132,8 @@ class FamilyEventNoteController extends GetxController {
   Future<void> fetchTransactions() async {
     List<TransactionEntry> transactions = await dbHelper.getTransactions();
     transactionsList.value = transactions;
+
+    log('detail:::::${transactions.toString()}');
   }
 
   List<String> getUniqueFamilyEvents() {

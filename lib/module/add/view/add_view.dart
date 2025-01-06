@@ -25,12 +25,21 @@ class AddView extends StatelessWidget {
       builder: (controller) {
         return Obx(
           () => PopScope(
-            canPop: false,
+            canPop: controller.mainController.selectedIndex.value == 0
+                ? true
+                : false,
             onPopInvoked: (didPop) {
               if (didPop) {
+                // Exit App : show snackbar : Tap again to exit app
+                // controller.mainController.showExitSnackBar(context);
+                // exit(0);
+              } else {
                 if (controller.isEditable.value) {
+                  log('before : controller.mainController.selectedIndex ::: ${controller.mainController.selectedIndex.value}');
                   controller.mainController.changeIndex(0);
-                  log('message');
+                  controller.isEditable.value = false;
+                  controller.clearForm();
+                  log('after : controller.mainController.selectedIndex ::: ${controller.mainController.selectedIndex.value}');
                 }
               }
             },

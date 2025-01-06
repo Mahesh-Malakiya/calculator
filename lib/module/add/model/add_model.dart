@@ -7,8 +7,8 @@ class TransactionEntry {
   final String name;
   final double amount;
   final String phoneNumber;
-  final String familyEvent; // Changed to String
-  final String relationship; // Changed to String
+  final String familyEvent;
+  final String relationship;
   final String? note;
   final String? memo;
   final DateTime createdAt;
@@ -21,8 +21,8 @@ class TransactionEntry {
     required this.name,
     required this.amount,
     required this.phoneNumber,
-    required this.familyEvent, // Make familyEvent required
-    required this.relationship, // Make relationship required
+    required this.familyEvent,
+    required this.relationship,
     this.note,
     this.memo,
     required this.createdAt,
@@ -42,11 +42,9 @@ class TransactionEntry {
       amount: (json['amount'] as num).toDouble(),
       phoneNumber: json['phoneNumber'] as String,
       familyEvent: json['familyEvent'] as String? ??
-          (throw Exception(
-              "familyEvent is required")), // Ensure it's a required string
+          (throw Exception("familyEvent is required")),
       relationship: json['relationship'] as String? ??
-          (throw Exception(
-              "relationship is required")), // Ensure it's a required string
+          (throw Exception("relationship is required")),
       note: json['note'] as String?,
       memo: json['memo'] as String?,
       createdAt: DateTime.parse(json['createdAt'] as String),
@@ -65,12 +63,30 @@ class TransactionEntry {
       'name': name,
       'amount': amount,
       'phoneNumber': phoneNumber,
-      'familyEvent': familyEvent, // No need to convert, it's already a String
-      'relationship': relationship, // No need to convert, it's already a String
+      'familyEvent': familyEvent,
+      'relationship': relationship,
       'note': note,
       'memo': memo,
       'createdAt': createdAt.toIso8601String(),
       'updatedAt': updatedAt?.toIso8601String(),
     };
+  }
+
+  // Override the toString() method to print the TransactionEntry details
+  @override
+  String toString() {
+    return 'TransactionEntry('
+        'id: $id, '
+        'type: $type, '
+        'date: $date, '
+        'name: $name, '
+        'amount: $amount, '
+        'phoneNumber: $phoneNumber, '
+        'familyEvent: $familyEvent, '
+        'relationship: $relationship, '
+        'note: $note, '
+        'memo: $memo, '
+        'createdAt: $createdAt, '
+        'updatedAt: $updatedAt)';
   }
 }

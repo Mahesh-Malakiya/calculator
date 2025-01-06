@@ -138,7 +138,7 @@ class AddController extends GetxController {
   }
 
   void updateTransactionType({required int index}) {
-    transactionType.value = filterItems[index] == 'Money received'
+    transactionType.value = filterItems[index] == '받은 돈'
         ? TransactionType.RECIVED_MONEY
         : TransactionType.SPENT_MONEY;
   }
@@ -172,7 +172,10 @@ class AddController extends GetxController {
     amountController.clear();
     phoneNumberController.clear();
     noteController.clear();
+    familyEventSelectController.value.clear();
+    relationShipSelectController.value.clear();
     isSelectedFamilyCard.value = false;
+    fetchFamilyEventsWithRelationships();
   }
 
   Future<void> refreshTransactions() async {
@@ -210,6 +213,7 @@ class AddController extends GetxController {
 
     // Refresh transactions and clear the form
     await refreshTransactions();
+    fetchFamilyEventsWithRelationships();
   }
 
   void clearForm() {
@@ -217,6 +221,8 @@ class AddController extends GetxController {
     amountController.clear();
     phoneNumberController.clear();
     noteController.clear();
+    familyEventSelectController.value.clear();
+    relationShipSelectController.value.clear();
   }
 
   void populateData({

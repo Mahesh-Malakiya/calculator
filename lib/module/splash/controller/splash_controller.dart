@@ -19,7 +19,7 @@ class SplashController extends GetxController {
       Get.offNamed(Routes.LOGIN_SIGNUP);
     } else {
       // Navigate to MAIN screen
-      Get.offNamed(Routes.MAIN);
+      Get.toNamed(Routes.MAIN);
     }
   }
 }
