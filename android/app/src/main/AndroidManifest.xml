@@ -8,7 +8,7 @@
 
 
     <application
-        android:label="flutter_calculator"
+        android:label="Calculator"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

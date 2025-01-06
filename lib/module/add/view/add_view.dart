@@ -39,6 +39,8 @@ class AddView extends StatelessWidget {
                   controller.mainController.changeIndex(0);
                   controller.isEditable.value = false;
                   controller.clearForm();
+                  controller.isSelectedFamily.value = -1;
+                  controller.isSelectedRelation.value = -1;
                   log('after : controller.mainController.selectedIndex ::: ${controller.mainController.selectedIndex.value}');
                 }
               }

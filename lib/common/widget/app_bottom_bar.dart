@@ -45,7 +45,11 @@ class AppBottomBar extends StatelessWidget {
               addController.nameController.clear();
               addController.amountController.clear();
               addController.phoneNumberController.clear();
+              addController.familyEventSelectController.value.clear();
+              addController.relationShipSelectController.value.clear();
               addController.noteController.clear();
+              addController.isSelectedFamily.value = -1;
+              addController.isSelectedRelation.value = -1;
             },
             child: SizedBox(
               width: 50.w,
