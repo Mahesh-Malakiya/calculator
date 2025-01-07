@@ -27,6 +27,7 @@ class AddController extends GetxController {
   final RxBool showErrorMessagePhone = RxBool(false);
   final RxBool showErrorMessagerelation = RxBool(false);
   final RxBool showErrorMessageevent = RxBool(false);
+  final RxBool isColorHide = RxBool(false);
 
   RxInt editIndexedData = RxInt(-1);
   RxInt isSelected = RxInt(0);
@@ -44,6 +45,15 @@ class AddController extends GetxController {
   final BuildContext context = Get.context!;
   Rx<DateTime> focusedDay = DateTime.now().obs;
   Rx<DateTime> selectedDay = DateTime.now().obs;
+  void onDaySelected(DateTime day) {
+    selectedDay.value = day;
+    focusedDay.value = day;
+    isColorHide.value = true;
+  }
+
+  void onPageChanged(DateTime day) {
+    focusedDay.value = day;
+  }
 
   @override
   void onInit() {
@@ -51,10 +61,6 @@ class AddController extends GetxController {
     super.onInit();
     upDateData();
     fetchFamilyEventsWithRelationships();
-  }
-
-  void onPageChanged(DateTime focusedDay) {
-    this.focusedDay.value = focusedDay;
   }
 
   Future<void> fetchTransactions() async {
