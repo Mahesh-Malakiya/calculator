@@ -55,7 +55,7 @@ class SquareBorderTextField extends StatelessWidget {
         cursorColor: AppColors.primary,
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(
-            vertical: 8,
+            vertical: 6,
             horizontal: 14,
           ),
           labelText: labelText,
@@ -99,7 +99,7 @@ class SquareBorderTextField extends StatelessWidget {
               style: whiteTextStyle,
               decoration: InputDecoration(
                 contentPadding: const EdgeInsets.symmetric(
-                  vertical: 8,
+                  vertical: 6,
                   horizontal: 14,
                 ),
                 labelText: labelText,

@@ -16,13 +16,16 @@ class BuildSearchWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(
+            height: 2.h,
+          ),
           Text(
             localizations!.searchCriteria,
             style: AppTextStyles(context)
                 .display20w700
                 .copyWith(color: AppColors.whiteOff),
           ),
-          SizedBox(height: 1.5.h),
+          SizedBox(height: 2.5.h),
           SquareBorderTextField(
             onChanged: (p0) {
               controller
@@ -74,6 +77,6 @@ class BuildSearchWidget extends StatelessWidget {
               : const SizedBox.shrink()),
         ],
       ),
-    );
+    ).paddingSymmetric(horizontal: 10);
   }
 }

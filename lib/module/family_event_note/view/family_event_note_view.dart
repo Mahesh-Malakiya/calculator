@@ -7,8 +7,9 @@ import 'package:flutter_calculator/module/family_event_note/controller/family_ev
 import 'package:flutter_calculator/module/family_event_note/view/widget/common/build_search_widget.dart';
 import 'package:flutter_calculator/module/family_event_note/view/widget/tabs/build_tabs.dart';
 import 'package:flutter_calculator/module/family_event_note/view/widget/view/family_event_name_widget.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 import 'package:get/get.dart';
+import 'package:pixel_perfect/pixel_perfect.dart';
 import 'package:sizer/sizer.dart';
 
 class FamilyEventNoteView extends StatelessWidget {
@@ -16,79 +17,94 @@ class FamilyEventNoteView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = AppLocalizations.of(context);
+    // final localizations = AppLocalizations.of(context);
     final controller = Get.put(FamilyEventNoteController());
+    const mockUpHeight = 896;
+    const mockUpWidth = 414;
+    final width = MediaQuery.of(context).size.width;
 
-    return PopScope(
-      onPopInvoked: (didPop) {
-        controller.isSelectedFamilyCard.value = false;
-      },
-      canPop: false,
-      child: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(FocusNode());
+    // Scale factor based on mockup width vs screen width
+    final scale = mockUpWidth / width;
+
+    return PixelPerfect(
+      scale: scale,
+      offset: Offset.zero,
+      assetPath: 'assets/images/pixel/main_1.png',
+      child: PopScope(
+        onPopInvoked: (didPop) {
+          controller.isSelectedFamilyCard.value = false;
         },
-        child: Obx(
-          () => Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const AppAppBar(),
-              controller.isSelectedFamilyCard.value
-                  ? Column(
-                      children: [
-                        SizedBox(
-                          height: 2.h,
-                        ),
-                        Row(
+        canPop: false,
+        child: Material(
+          color: AppColors.blackBackGround,
+          child: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).requestFocus(FocusNode());
+            },
+            child: Obx(
+              () => Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const AppAppBar(),
+                  controller.isSelectedFamilyCard.value
+                      ? Column(
                           children: [
-                            GestureDetector(
-                              onTap: () {
-                                controller.isSelectedFamilyCard.value = false;
-                              },
-                              child: Icon(
-                                Icons.arrow_back_ios_new,
-                                color: AppColors.whiteOff,
-                              ),
-                            ),
-                            SizedBox(width: 3.w),
-                            Text(
-                              controller.selectedEventName.value,
-                              style: AppTextStyles(context)
-                                  .display20w700
-                                  .copyWith(color: AppColors.whiteOff),
-                            )
-                          ],
-                        ).paddingSymmetric(
-                          horizontal: 4.w,
-                        ),
-                      ],
-                    )
-                  : SizedBox(height: 2.h),
-              controller.isSelectedFamilyCard.value
-                  ? Expanded(child: FamilyEventNameWidget())
-                  : Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            BuildSearchWidget(),
-                            if (controller.filteredTransactions.isEmpty)
-                              Container(
-                                height: 1.h,
-                                color: AppColors.accent,
-                              ),
-                            Obx(
-                              () => controller.filteredTransactions.isEmpty
-                                  ? const BuildAllTabs()
-                                  : const SizedBox.shrink(),
-                            ),
                             SizedBox(
                               height: 2.h,
-                            )
+                            ),
+                            Row(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    controller.isSelectedFamilyCard.value =
+                                        false;
+                                  },
+                                  child: Icon(
+                                    Icons.arrow_back_ios_new,
+                                    color: AppColors.whiteOff,
+                                  ),
+                                ),
+                                SizedBox(width: 3.w),
+                                Text(
+                                  controller.selectedEventName.value,
+                                  style: AppTextStyles(context)
+                                      .display20w700
+                                      .copyWith(color: AppColors.whiteOff),
+                                )
+                              ],
+                            ).paddingSymmetric(
+                              horizontal: 4.w,
+                            ),
                           ],
-                        ),
-                      ),
-                    )
-            ],
+                        )
+                      : SizedBox(height: 2.h),
+                  controller.isSelectedFamilyCard.value
+                      ? Expanded(child: FamilyEventNameWidget())
+                      : Expanded(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              children: [
+                                BuildSearchWidget(),
+                                if (controller.filteredTransactions.isEmpty)
+                                  Container(
+                                    height: 1.h,
+                                    color: AppColors.accent,
+                                  ),
+                                Obx(
+                                  () => controller.filteredTransactions.isEmpty
+                                      ? const BuildAllTabs()
+                                      : const SizedBox.shrink(),
+                                ),
+                                SizedBox(
+                                  height: 2.h,
+                                )
+                              ],
+                            ),
+                          ),
+                        )
+                ],
+              ),
+            ),
           ),
         ),
       ),

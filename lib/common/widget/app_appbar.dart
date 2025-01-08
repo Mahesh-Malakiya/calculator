@@ -31,7 +31,7 @@ class AppAppBar extends StatelessWidget {
               },
               child: SvgPicture.asset(Assets.images.icons.setting)),
         ],
-      ),
+      ).paddingSymmetric(horizontal: 10),
     );
   }
 }

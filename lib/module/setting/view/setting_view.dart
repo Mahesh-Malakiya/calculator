@@ -49,7 +49,7 @@ class SettingView extends StatelessWidget {
                         ),
                       ),
                       SizedBox(
-                        height: 3.h,
+                        height: 4.h,
                       ),
                       Row(
                         children: [
@@ -211,7 +211,9 @@ class SettingView extends StatelessWidget {
                         left: 2.w,
                       ),
                     ],
-                  ).paddingSymmetric(horizontal: 4.w),
+                  )
+                      .paddingSymmetric(horizontal: 4.w)
+                      .paddingSymmetric(horizontal: 10),
                 ],
               ),
             ));

@@ -10,7 +10,7 @@ class BuildFilter extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.find<FamilyEventNoteController>();
     return Container(
-      height: 25.h,
+      height: 22.h,
       decoration: BoxDecoration(
         color: AppColors.accent,
         borderRadius: BorderRadius.circular(AppSizes.radius_8),
@@ -19,7 +19,7 @@ class BuildFilter extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: 4,
-        padding: EdgeInsets.symmetric(vertical: 2.h),
+        padding: EdgeInsets.symmetric(vertical: 1.h),
         itemBuilder: (context, index) => Obx(
           () => SelectFilter(
             onTap: () {

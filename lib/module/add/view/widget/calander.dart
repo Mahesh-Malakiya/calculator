@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:flutter_calculator/config/theme/screen_utils.dart';
 import 'package:flutter_calculator/constants/common_imports.dart';

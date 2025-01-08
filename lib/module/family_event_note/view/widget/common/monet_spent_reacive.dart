@@ -22,7 +22,7 @@ class MonetSpentReacive extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 2.h),
+          SizedBox(height: 2.9.h),
           Row(
             children: [
               Text(
@@ -42,9 +42,7 @@ class MonetSpentReacive extends StatelessWidget {
               ),
             ],
           ),
-          SizedBox(
-            height: 1.h,
-          ),
+          SizedBox(height: 3.h),
           Obx(
             () => isSpent == true
                 ? Column(
@@ -91,6 +89,6 @@ class MonetSpentReacive extends StatelessWidget {
           //
         ],
       ),
-    );
+    ).paddingSymmetric(horizontal: 10);
   }
 }
