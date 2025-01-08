@@ -362,9 +362,9 @@ class AddView extends StatelessWidget {
                                   height: 4.h,
                                 ),
                               ],
-                            )
+                            ).paddingSymmetric(horizontal: 10)
                           ],
-                        ).paddingSymmetric(horizontal: 10),
+                        ),
                       ),
                     ),
                   )
