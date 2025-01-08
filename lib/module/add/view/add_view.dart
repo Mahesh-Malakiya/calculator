@@ -11,6 +11,7 @@ import 'package:flutter_calculator/module/add/view/widget/calander.dart';
 import 'package:flutter_calculator/module/add/view/widget/title_with_textfield.dart';
 import 'package:flutter_calculator/module/family_event_note/view/widget/common/select_filter.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:sizer/sizer.dart';
 
@@ -46,6 +47,16 @@ class AddView extends StatelessWidget {
                     controller.isSelectedRelation.value = -1;
                     controller.isTappedEditSave.value = 0;
                     log('after : controller.mainController.selectedIndex ::: ${controller.mainController.selectedIndex.value}');
+                  } else {
+                    controller.mainController.changeIndex(0);
+                    log('before : controller.mainController.selectedIndex ::: ${controller.mainController.selectedIndex.value}');
+                    controller.mainController.changeIndex(0);
+                    controller.isEditable.value = false;
+                    controller.clearForm();
+                    controller.isSelectedFamily.value = -1;
+                    controller.isSelectedRelation.value = -1;
+                    controller.isTappedEditSave.value = 0;
+                    log('after : controller.mainController.selectedIndex ::: ${controller.mainController.selectedIndex.value}');
                   }
                 }
               },
@@ -68,13 +79,30 @@ class AddView extends StatelessWidget {
                                 SizedBox(
                                   height: 2.h,
                                 ),
-                                Text(
-                                  controller.isEditable.value
-                                      ? localization!.edit
-                                      : localization!.add,
-                                  style: AppTextStyles(context)
-                                      .display20w700
-                                      .copyWith(color: AppColors.whiteOff),
+                                InkWell(
+                                  onTap: () {
+                                    controller.mainController.changeIndex(0);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 2.w,
+                                      ),
+                                      Image.asset('assets/images/png/back.png'),
+                                      SizedBox(
+                                        width: 20,
+                                      ),
+                                      Text(
+                                        controller.isEditable.value
+                                            ? localization!.edit
+                                            : localization!.add,
+                                        style: AppTextStyles(context)
+                                            .display20w700
+                                            .copyWith(
+                                                color: AppColors.whiteOff),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                                 SizedBox(
                                   height: 2.h,

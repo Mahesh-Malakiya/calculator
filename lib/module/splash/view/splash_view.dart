@@ -14,45 +14,40 @@ class SplashView extends StatelessWidget {
     // Scale factor based on mockup width vs screen width
     final scale = mockUpWidth / width;
 
-    return PixelPerfect(
-      scale: scale,
-      offset: Offset.zero,
-      assetPath: 'assets/images/pixel/pixel_splash.png',
-      child: GetBuilder<SplashController>(
-        init: SplashController(),
-        builder: (controller) {
-          return Scaffold(
-            body: Stack(
-              fit: StackFit.expand,
-              children: [
-                Positioned(
-                  child: Image.asset(
-                    Assets.images.png.newSplash.path,
-                    fit: BoxFit
-                        .cover, // Use BoxFit.cover to ensure it scales properly
-                  ),
+    return GetBuilder<SplashController>(
+      init: SplashController(),
+      builder: (controller) {
+        return Scaffold(
+          body: Stack(
+            fit: StackFit.expand,
+            children: [
+              Positioned(
+                child: Image.asset(
+                  Assets.images.png.newSplash.path,
+                  fit: BoxFit
+                      .cover, // Use BoxFit.cover to ensure it scales properly
                 ),
-                Positioned(
-                  child: Image.asset(
-                    Assets.images.png.newSplashShadow.path,
-                    fit: BoxFit
-                        .cover, // Use BoxFit.cover to ensure it scales properly
-                  ),
+              ),
+              Positioned(
+                child: Image.asset(
+                  Assets.images.png.newSplashShadow.path,
+                  fit: BoxFit
+                      .cover, // Use BoxFit.cover to ensure it scales properly
                 ),
-                // Remove Positioned here and just center the logo directly
-                Center(
-                  child: Image.asset(
-                    Assets.images.png.calcuatorLogo.path,
-                    height: 185, // Fixed height for the logo
-                    width: 119, // Fixed width for the logo
-                    fit: BoxFit.cover,
-                  ),
+              ),
+              // Remove Positioned here and just center the logo directly
+              Center(
+                child: Image.asset(
+                  Assets.images.png.calcuatorLogo.path,
+                  height: 185, // Fixed height for the logo
+                  width: 119, // Fixed width for the logo
+                  fit: BoxFit.cover,
                 ),
-              ],
-            ),
-          );
-        },
-      ),
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

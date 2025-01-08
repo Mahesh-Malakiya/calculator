@@ -26,84 +26,78 @@ class FamilyEventNoteView extends StatelessWidget {
     // Scale factor based on mockup width vs screen width
     final scale = mockUpWidth / width;
 
-    return PixelPerfect(
-      scale: scale,
-      offset: Offset.zero,
-      assetPath: 'assets/images/pixel/main_1.png',
-      child: PopScope(
-        onPopInvoked: (didPop) {
-          controller.isSelectedFamilyCard.value = false;
-        },
-        canPop: false,
-        child: Material(
-          color: AppColors.blackBackGround,
-          child: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).requestFocus(FocusNode());
-            },
-            child: Obx(
-              () => Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const AppAppBar(),
-                  controller.isSelectedFamilyCard.value
-                      ? Column(
-                          children: [
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            Row(
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    controller.isSelectedFamilyCard.value =
-                                        false;
-                                  },
-                                  child: Icon(
-                                    Icons.arrow_back_ios_new,
-                                    color: AppColors.whiteOff,
-                                  ),
-                                ),
-                                SizedBox(width: 3.w),
-                                Text(
-                                  controller.selectedEventName.value,
-                                  style: AppTextStyles(context)
-                                      .display20w700
-                                      .copyWith(color: AppColors.whiteOff),
-                                )
-                              ],
-                            ).paddingSymmetric(
-                              horizontal: 4.w,
-                            ),
-                          ],
-                        )
-                      : SizedBox(height: 2.h),
-                  controller.isSelectedFamilyCard.value
-                      ? Expanded(child: FamilyEventNameWidget())
-                      : Expanded(
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                BuildSearchWidget(),
-                                if (controller.filteredTransactions.isEmpty)
-                                  Container(
-                                    height: 1.h,
-                                    color: AppColors.accent,
-                                  ),
-                                Obx(
-                                  () => controller.filteredTransactions.isEmpty
-                                      ? const BuildAllTabs()
-                                      : const SizedBox.shrink(),
-                                ),
-                                SizedBox(
-                                  height: 2.h,
-                                )
-                              ],
-                            ),
+    return PopScope(
+      onPopInvoked: (didPop) {
+        controller.isSelectedFamilyCard.value = false;
+      },
+      canPop: false,
+      child: Material(
+        color: AppColors.blackBackGround,
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(FocusNode());
+          },
+          child: Obx(
+            () => Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const AppAppBar(),
+                controller.isSelectedFamilyCard.value
+                    ? Column(
+                        children: [
+                          SizedBox(
+                            height: 2.h,
                           ),
-                        )
-                ],
-              ),
+                          Row(
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  controller.isSelectedFamilyCard.value = false;
+                                },
+                                child: Icon(
+                                  Icons.arrow_back_ios_new,
+                                  color: AppColors.whiteOff,
+                                ),
+                              ),
+                              SizedBox(width: 3.w),
+                              Text(
+                                controller.selectedEventName.value,
+                                style: AppTextStyles(context)
+                                    .display20w700
+                                    .copyWith(color: AppColors.whiteOff),
+                              )
+                            ],
+                          ).paddingSymmetric(
+                            horizontal: 4.w,
+                          ),
+                        ],
+                      )
+                    : SizedBox(height: 2.h),
+                controller.isSelectedFamilyCard.value
+                    ? Expanded(child: FamilyEventNameWidget())
+                    : Expanded(
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              BuildSearchWidget(),
+                              if (controller.filteredTransactions.isEmpty)
+                                Container(
+                                  height: 1.h,
+                                  color: AppColors.accent,
+                                ),
+                              Obx(
+                                () => controller.filteredTransactions.isEmpty
+                                    ? const BuildAllTabs()
+                                    : const SizedBox.shrink(),
+                              ),
+                              SizedBox(
+                                height: 2.h,
+                              )
+                            ],
+                          ),
+                        ),
+                      )
+              ],
             ),
           ),
         ),
